@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { View, Text, TextInput, Pressable } from "react-native";
+import { Box } from "@/components/ui/box";
+import { Text } from "@/components/ui/text";
+import { Input, InputField } from "@/components/ui/input";
+import { VStack } from "@/components/ui/vstack";
+import { HStack } from "@/components/ui/hstack";
+import { Pressable } from "@/components/ui/pressable";
 
 export interface LLMSettings {
   apiKey: string;
@@ -43,77 +48,61 @@ export function TokenInput({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <View style={{ marginBottom: 16 }}>
-      <Pressable
-        onPress={() => setExpanded(!expanded)}
-        style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
-      >
-        <Text style={{ fontSize: 16, fontWeight: "600" }}>Settings</Text>
-        <Text style={{ fontSize: 12, color: "#666" }}>
-          {expanded ? "▲" : "▼"}
-        </Text>
+    <Box className="mb-4">
+      <Pressable onPress={() => setExpanded(!expanded)}>
+        <HStack className="items-center gap-2">
+          <Text className="text-base font-semibold">Settings</Text>
+          <Text className="text-xs text-typography-500">
+            {expanded ? "▲" : "▼"}
+          </Text>
+        </HStack>
       </Pressable>
 
       {expanded && (
-        <View style={{ marginTop: 12, gap: 10 }}>
-          <View>
-            <Text style={{ fontSize: 13, marginBottom: 4, color: "#555" }}>
+        <VStack className="mt-3 gap-2.5">
+          <Box>
+            <Text className="text-[13px] mb-1 text-typography-600">
               API Key
             </Text>
-            <TextInput
-              value={settings.apiKey}
-              onChangeText={(apiKey) => onChange({ ...settings, apiKey })}
-              placeholder="sk-..."
-              secureTextEntry
-              style={{
-                borderWidth: 1,
-                borderColor: "#ddd",
-                borderRadius: 6,
-                padding: 8,
-                fontSize: 14,
-              }}
-            />
-          </View>
-          <View>
-            <Text style={{ fontSize: 13, marginBottom: 4, color: "#555" }}>
+            <Input variant="outline" size="md">
+              <InputField
+                value={settings.apiKey}
+                onChangeText={(apiKey) => onChange({ ...settings, apiKey })}
+                placeholder="sk-..."
+                secureTextEntry
+              />
+            </Input>
+          </Box>
+          <Box>
+            <Text className="text-[13px] mb-1 text-typography-600">
               Base URL
             </Text>
-            <TextInput
-              value={settings.baseUrl}
-              onChangeText={(baseUrl) => onChange({ ...settings, baseUrl })}
-              placeholder="https://api.openai.com/v1"
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={{
-                borderWidth: 1,
-                borderColor: "#ddd",
-                borderRadius: 6,
-                padding: 8,
-                fontSize: 14,
-              }}
-            />
-          </View>
-          <View>
-            <Text style={{ fontSize: 13, marginBottom: 4, color: "#555" }}>
+            <Input variant="outline" size="md">
+              <InputField
+                value={settings.baseUrl}
+                onChangeText={(baseUrl) => onChange({ ...settings, baseUrl })}
+                placeholder="https://api.openai.com/v1"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </Input>
+          </Box>
+          <Box>
+            <Text className="text-[13px] mb-1 text-typography-600">
               Model
             </Text>
-            <TextInput
-              value={settings.model}
-              onChangeText={(model) => onChange({ ...settings, model })}
-              placeholder="gpt-4o-mini"
-              autoCapitalize="none"
-              autoCorrect={false}
-              style={{
-                borderWidth: 1,
-                borderColor: "#ddd",
-                borderRadius: 6,
-                padding: 8,
-                fontSize: 14,
-              }}
-            />
-          </View>
-        </View>
+            <Input variant="outline" size="md">
+              <InputField
+                value={settings.model}
+                onChangeText={(model) => onChange({ ...settings, model })}
+                placeholder="gpt-4o-mini"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            </Input>
+          </Box>
+        </VStack>
       )}
-    </View>
+    </Box>
   );
 }
