@@ -11,4 +11,5 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
   experiments: {
     baseUrl: "/llm-grammar-checker-demo-public",
   },
+  userInterfaceStyle: "automatic",
 });
