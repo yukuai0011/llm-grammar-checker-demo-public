@@ -5,7 +5,12 @@ import { Heading } from "@/components/ui/heading";
 import { Input, InputField } from "@/components/ui/input";
 import { Button, ButtonText, ButtonSpinner } from "@/components/ui/button";
 import { VStack } from "@/components/ui/vstack";
-import { TokenInput, loadSettings, saveSettings, type LLMSettings } from "./TokenInput";
+import {
+  TokenInput,
+  loadSettings,
+  saveSettings,
+  type LLMSettings,
+} from "./TokenInput";
 import { UnderlinedText } from "./UnderlinedText";
 import { chatCompletion } from "../lib/llm";
 import { buildMessages, parseResponse, type Correction } from "../lib/parser";
@@ -41,7 +46,11 @@ export function GrammarChecker() {
       setCorrections(parsed);
       setMode("display");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An unexpected error occurred.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred."
+      );
     } finally {
       setLoading(false);
     }
@@ -55,9 +64,7 @@ export function GrammarChecker() {
 
   return (
     <Box className="max-w-2xl w-full p-6">
-      <Heading className="text-2xl mb-1">
-        Grammar Checker
-      </Heading>
+      <Heading className="text-2xl font-bold mb-1">Grammar Checker</Heading>
       <Text className="text-sm text-typography-500 mb-6">
         Paste your text and let an LLM find grammar issues.
       </Text>
@@ -66,7 +73,7 @@ export function GrammarChecker() {
 
       {mode === "edit" ? (
         <VStack className="gap-3">
-          <Input className="border border-border-300 rounded-lg">
+          <Input className="rounded-lg border border-border-300 flex-row overflow-hidden">
             <InputField
               value={text}
               onChangeText={setText}
@@ -74,18 +81,24 @@ export function GrammarChecker() {
               placeholder="Type or paste your text here..."
               spellCheck={false}
               autoCorrect={false}
-              className="min-h-[200px] text-base leading-6 text-top"
+              className="p-3 min-h-[200px] text-base leading-6 text-typography-900 text-top"
             />
           </Input>
           <Button
             onPress={handleCheck}
             isDisabled={loading || !text.trim()}
-            className={loading || !text.trim() ? "bg-background-300" : ""}
+            className={`rounded-lg px-4 py-2 items-center justify-center ${
+              loading || !text.trim()
+                ? "bg-background-300"
+                : "bg-primary-600"
+            }`}
           >
             {loading ? (
               <ButtonSpinner />
             ) : (
-              <ButtonText>Check Grammar</ButtonText>
+              <ButtonText className="text-white font-semibold">
+                Check Grammar
+              </ButtonText>
             )}
           </Button>
         </VStack>
@@ -99,17 +112,17 @@ export function GrammarChecker() {
           )}
           <Button
             onPress={handleEdit}
-            className="border border-border-300 rounded-lg px-4 py-2"
+            className="rounded-lg px-4 py-2 border border-border-400 items-center justify-center"
           >
-            <ButtonText>Edit</ButtonText>
+            <ButtonText className="text-typography-700 font-semibold">
+              Edit
+            </ButtonText>
           </Button>
         </VStack>
       )}
 
       {error && (
-        <Text className="text-error-600 text-sm mt-3">
-          {error}
-        </Text>
+        <Text className="text-error-600 text-sm mt-3">{error}</Text>
       )}
     </Box>
   );

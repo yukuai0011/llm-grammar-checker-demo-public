@@ -64,12 +64,13 @@ export function TokenInput({
             <Text className="text-[13px] mb-1 text-typography-600">
               API Key
             </Text>
-            <Input className="border border-border-300 rounded-lg">
+            <Input className="rounded-lg border border-border-300 h-10 flex-row overflow-hidden">
               <InputField
                 value={settings.apiKey}
                 onChangeText={(apiKey) => onChange({ ...settings, apiKey })}
                 placeholder="sk-..."
                 secureTextEntry
+                className="flex-1 px-3 text-typography-900"
               />
             </Input>
           </Box>
@@ -77,13 +78,14 @@ export function TokenInput({
             <Text className="text-[13px] mb-1 text-typography-600">
               Base URL
             </Text>
-            <Input className="border border-border-300 rounded-lg">
+            <Input className="rounded-lg border border-border-300 h-10 flex-row overflow-hidden">
               <InputField
                 value={settings.baseUrl}
                 onChangeText={(baseUrl) => onChange({ ...settings, baseUrl })}
                 placeholder="https://api.openai.com/v1"
                 autoCapitalize="none"
                 autoCorrect={false}
+                className="flex-1 px-3 text-typography-900"
               />
             </Input>
           </Box>
@@ -91,13 +93,14 @@ export function TokenInput({
             <Text className="text-[13px] mb-1 text-typography-600">
               Model
             </Text>
-            <Input className="border border-border-300 rounded-lg">
+            <Input className="rounded-lg border border-border-300 h-10 flex-row overflow-hidden">
               <InputField
                 value={settings.model}
                 onChangeText={(model) => onChange({ ...settings, model })}
                 placeholder="gpt-4o-mini"
                 autoCapitalize="none"
                 autoCorrect={false}
+                className="flex-1 px-3 text-typography-900"
               />
             </Input>
           </Box>
