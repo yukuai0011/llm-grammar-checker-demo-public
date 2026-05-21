@@ -1,6 +1,6 @@
 import React from 'react';
+import { View } from 'react-native';
 import { config } from './config';
-import { VariableProvider } from 'nativewind';
 
 type Mode = 'light' | 'dark' | 'system';
 
@@ -13,14 +13,11 @@ export function GluestackUIProvider({
   mode = 'light',
   children,
 }: GluestackUIProviderProps) {
+  const variables = mode === 'dark' ? config.dark : config.light;
+
   return (
-    <VariableProvider
-      variables={mode === 'dark' ? config.dark : config.light}
-      style={{
-        flex: 1,
-      }}
-    >
+    <View style={[variables, { flex: 1 }]}>
       {children}
-    </VariableProvider>
+    </View>
   );
 }

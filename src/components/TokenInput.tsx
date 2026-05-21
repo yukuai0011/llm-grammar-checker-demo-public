@@ -64,7 +64,7 @@ export function TokenInput({
             <Text className="text-[13px] mb-1 text-typography-600">
               API Key
             </Text>
-            <Input variant="outline" size="md">
+            <Input className="border border-border-300 rounded-lg">
               <InputField
                 value={settings.apiKey}
                 onChangeText={(apiKey) => onChange({ ...settings, apiKey })}
@@ -77,7 +77,7 @@ export function TokenInput({
             <Text className="text-[13px] mb-1 text-typography-600">
               Base URL
             </Text>
-            <Input variant="outline" size="md">
+            <Input className="border border-border-300 rounded-lg">
               <InputField
                 value={settings.baseUrl}
                 onChangeText={(baseUrl) => onChange({ ...settings, baseUrl })}
@@ -91,7 +91,7 @@ export function TokenInput({
             <Text className="text-[13px] mb-1 text-typography-600">
               Model
             </Text>
-            <Input variant="outline" size="md">
+            <Input className="border border-border-300 rounded-lg">
               <InputField
                 value={settings.model}
                 onChangeText={(model) => onChange({ ...settings, model })}

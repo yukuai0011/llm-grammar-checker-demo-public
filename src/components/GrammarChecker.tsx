@@ -55,7 +55,7 @@ export function GrammarChecker() {
 
   return (
     <Box className="max-w-2xl w-full p-6">
-      <Heading size="2xl" className="mb-1">
+      <Heading className="text-2xl mb-1">
         Grammar Checker
       </Heading>
       <Text className="text-sm text-typography-500 mb-6">
@@ -66,7 +66,7 @@ export function GrammarChecker() {
 
       {mode === "edit" ? (
         <VStack className="gap-3">
-          <Input variant="outline" size="md">
+          <Input className="border border-border-300 rounded-lg">
             <InputField
               value={text}
               onChangeText={setText}
@@ -99,8 +99,7 @@ export function GrammarChecker() {
           )}
           <Button
             onPress={handleEdit}
-            variant="outline"
-            action="secondary"
+            className="border border-border-300 rounded-lg px-4 py-2"
           >
             <ButtonText>Edit</ButtonText>
           </Button>
