@@ -1,6 +1,16 @@
 import { useState, useEffect, useCallback } from "react";
-import { View, Text, TextInput, Pressable, ActivityIndicator } from "react-native";
-import { TokenInput, loadSettings, saveSettings, type LLMSettings } from "./TokenInput";
+import { Box } from "@/components/ui/box";
+import { Text } from "@/components/ui/text";
+import { Heading } from "@/components/ui/heading";
+import { Input, InputField } from "@/components/ui/input";
+import { Button, ButtonText, ButtonSpinner } from "@/components/ui/button";
+import { VStack } from "@/components/ui/vstack";
+import {
+  TokenInput,
+  loadSettings,
+  saveSettings,
+  type LLMSettings,
+} from "./TokenInput";
 import { UnderlinedText } from "./UnderlinedText";
 import { chatCompletion } from "../lib/llm";
 import { buildMessages, parseResponse, type Correction } from "../lib/parser";
@@ -36,7 +46,11 @@ export function GrammarChecker() {
       setCorrections(parsed);
       setMode("display");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "An unexpected error occurred.");
+      setError(
+        err instanceof Error
+          ? err.message
+          : "An unexpected error occurred."
+      );
     } finally {
       setLoading(false);
     }
@@ -49,91 +63,67 @@ export function GrammarChecker() {
   }, []);
 
   return (
-    <View style={{ maxWidth: 720, width: "100%", padding: 24 }}>
-      <Text style={{ fontSize: 28, fontWeight: "700", marginBottom: 4 }}>
-        Grammar Checker
-      </Text>
-      <Text style={{ fontSize: 14, color: "#888", marginBottom: 24 }}>
+    <Box className="max-w-2xl w-full p-6">
+      <Heading className="text-2xl font-bold mb-1">Grammar Checker</Heading>
+      <Text className="text-sm text-typography-500 mb-6">
         Paste your text and let an LLM find grammar issues.
       </Text>
 
       <TokenInput settings={settings} onChange={setSettings} />
 
       {mode === "edit" ? (
-        <View style={{ gap: 12 }}>
-          <TextInput
-            value={text}
-            onChangeText={setText}
-            multiline
-            placeholder="Type or paste your text here..."
-            spellCheck={false}
-            autoCorrect={false}
-            style={{
-              borderWidth: 1,
-              borderColor: "#ddd",
-              borderRadius: 8,
-              padding: 12,
-              fontSize: 16,
-              minHeight: 200,
-              textAlignVertical: "top",
-              lineHeight: 24,
-            }}
-          />
-          <Pressable
+        <VStack className="gap-3">
+          <Input className="rounded-lg border border-border-300 flex-row overflow-hidden">
+            <InputField
+              value={text}
+              onChangeText={setText}
+              multiline
+              placeholder="Type or paste your text here..."
+              spellCheck={false}
+              autoCorrect={false}
+              className="p-3 min-h-[200px] text-base leading-6 text-typography-900 text-top"
+            />
+          </Input>
+          <Button
             onPress={handleCheck}
-            disabled={loading || !text.trim()}
-            style={{
-              backgroundColor: loading || !text.trim() ? "#ccc" : "#2563eb",
-              borderRadius: 8,
-              paddingVertical: 12,
-              alignItems: "center",
-            }}
+            isDisabled={loading || !text.trim()}
+            className={`rounded-lg px-4 py-2 items-center justify-center ${
+              loading || !text.trim()
+                ? "bg-background-300"
+                : "bg-primary-600"
+            }`}
           >
             {loading ? (
-              <ActivityIndicator color="#fff" />
+              <ButtonSpinner />
             ) : (
-              <Text style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}>
+              <ButtonText className="text-white font-semibold">
                 Check Grammar
-              </Text>
+              </ButtonText>
             )}
-          </Pressable>
-        </View>
+          </Button>
+        </VStack>
       ) : (
-        <View style={{ gap: 12 }}>
+        <VStack className="gap-3">
           <UnderlinedText text={text} corrections={corrections} />
           {corrections.length === 0 && !error && (
-            <Text
-              style={{
-                color: "#16a34a",
-                fontSize: 16,
-                fontWeight: "600",
-                textAlign: "center",
-              }}
-            >
+            <Text className="text-success-600 text-base font-semibold text-center">
               No grammar issues found!
             </Text>
           )}
-          <Pressable
+          <Button
             onPress={handleEdit}
-            style={{
-              backgroundColor: "#6b7280",
-              borderRadius: 8,
-              paddingVertical: 12,
-              alignItems: "center",
-            }}
+            className="rounded-lg px-4 py-2 border border-border-400 items-center justify-center"
           >
-            <Text style={{ color: "#fff", fontSize: 16, fontWeight: "600" }}>
+            <ButtonText className="text-typography-700 font-semibold">
               Edit
-            </Text>
-          </Pressable>
-        </View>
+            </ButtonText>
+          </Button>
+        </VStack>
       )}
 
       {error && (
-        <Text style={{ color: "#dc2626", fontSize: 14, marginTop: 12 }}>
-          {error}
-        </Text>
+        <Text className="text-error-600 text-sm mt-3">{error}</Text>
       )}
-    </View>
+    </Box>
   );
 }
