@@ -125,7 +125,7 @@ module.exports = {
           900: 'var(--color-background-900)',
           950: 'var(--color-background-950)',
         },
-        text: {
+        typography: {
           0: 'var(--color-text-0)',
           50: 'var(--color-text-50)',
           100: 'var(--color-text-100)',
