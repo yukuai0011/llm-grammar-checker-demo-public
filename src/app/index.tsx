@@ -1,17 +1,10 @@
-import { View } from "react-native";
+import { Box } from "@/components/ui/box";
 import { GrammarChecker } from "../components/GrammarChecker";
 
 export default function Index() {
   return (
-    <View
-      style={{
-        flex: 1,
-        backgroundColor: "#fff",
-        alignItems: "center",
-        paddingTop: 40,
-      }}
-    >
+    <Box className="flex-1 bg-background-0 items-center pt-10">
       <GrammarChecker />
-    </View>
+    </Box>
   );
 }
