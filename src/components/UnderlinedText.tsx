@@ -1,5 +1,6 @@
 import { useState } from "react";
-import { View, Text } from "react-native";
+import { Box } from "@/components/ui/box";
+import { Text } from "@/components/ui/text";
 import type { Correction } from "../lib/parser";
 import { CorrectionPopup } from "./CorrectionPopup";
 
@@ -12,7 +13,6 @@ export function UnderlinedText({
 }) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
-  // Build segments: split text into corrected and normal parts
   const segments: { text: string; correction?: Correction }[] = [];
   let lastEnd = 0;
 
@@ -56,18 +56,10 @@ export function UnderlinedText({
   };
 
   return (
-    <View
-      style={{
-        padding: 12,
-        borderWidth: 1,
-        borderColor: "#ddd",
-        borderRadius: 8,
-        minHeight: 120,
-      }}
-    >
-      <Text style={{ fontSize: 16, lineHeight: 24 }}>
+    <Box className="p-3 border border-border-300 rounded-lg min-h-[120px]">
+      <Text className="text-base leading-6">
         {segments.map(renderSegment)}
       </Text>
-    </View>
+    </Box>
   );
 }
