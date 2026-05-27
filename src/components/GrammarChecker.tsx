@@ -86,7 +86,7 @@ export function GrammarChecker() {
           </Input>
           <Button
             onPress={handleCheck}
-            isDisabled={loading || !text.trim()}
+            disabled={loading || !text.trim()}
             className={`rounded-lg px-4 py-2 items-center justify-center ${
               loading || !text.trim()
                 ? "bg-background-300"
