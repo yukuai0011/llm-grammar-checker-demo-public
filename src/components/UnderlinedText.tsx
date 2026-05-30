@@ -1,6 +1,4 @@
 import { useState } from "react";
-import { Box } from "@/components/ui/box";
-import { Text } from "@/components/ui/text";
 import type { Correction } from "../lib/parser";
 import { CorrectionPopup } from "./CorrectionPopup";
 
@@ -56,10 +54,10 @@ export function UnderlinedText({
   };
 
   return (
-    <Box className="p-3 border border-border-300 rounded-lg min-h-[120px]">
-      <Text className="text-base leading-6">
+    <div className="p-3 border border-default-300 rounded-lg min-h-[120px] bg-content1">
+      <p className="text-base leading-6 text-foreground">
         {segments.map(renderSegment)}
-      </Text>
-    </Box>
+      </p>
+    </div>
   );
 }

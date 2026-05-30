@@ -1,10 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Box } from "@/components/ui/box";
-import { Text } from "@/components/ui/text";
-import { Heading } from "@/components/ui/heading";
-import { Input, InputField } from "@/components/ui/input";
-import { Button, ButtonText, ButtonSpinner } from "@/components/ui/button";
-import { VStack } from "@/components/ui/vstack";
+import { Button, Input, TextArea, Spinner, Card, CardContent } from "@heroui/react";
 import {
   TokenInput,
   loadSettings,
@@ -47,9 +42,7 @@ export function GrammarChecker() {
       setMode("display");
     } catch (err) {
       setError(
-        err instanceof Error
-          ? err.message
-          : "An unexpected error occurred."
+        err instanceof Error ? err.message : "An unexpected error occurred."
       );
     } finally {
       setLoading(false);
@@ -63,67 +56,53 @@ export function GrammarChecker() {
   }, []);
 
   return (
-    <Box className="max-w-2xl w-full p-6">
-      <Heading className="text-2xl font-bold mb-1">Grammar Checker</Heading>
-      <Text className="text-sm text-typography-500 mb-6">
+    <div className="max-w-2xl w-full">
+      <h1 className="text-2xl font-bold mb-1">Grammar Checker</h1>
+      <p className="text-sm text-default-500 mb-6">
         Paste your text and let an LLM find grammar issues.
-      </Text>
+      </p>
 
       <TokenInput settings={settings} onChange={setSettings} />
 
       {mode === "edit" ? (
-        <VStack className="gap-3">
-          <Input className="rounded-lg border border-border-300 flex-row overflow-hidden">
-            <InputField
-              value={text}
-              onChangeText={setText}
-              multiline
-              placeholder="Type or paste your text here..."
-              spellCheck={false}
-              autoCorrect={false}
-              className="p-3 min-h-[200px] text-base leading-6 text-typography-900 text-top"
-            />
-          </Input>
+        <div className="flex flex-col gap-3">
+          <TextArea
+            value={text}
+            onChange={setText}
+            placeholder="Type or paste your text here..."
+            rows={8}
+            spellCheck={false}
+          />
           <Button
             onPress={handleCheck}
             isDisabled={loading || !text.trim()}
-            className={`rounded-lg px-4 py-2 items-center justify-center ${
-              loading || !text.trim()
-                ? "bg-background-300"
-                : "bg-primary-600"
-            }`}
+            color="primary"
+            className="font-semibold"
           >
-            {loading ? (
-              <ButtonSpinner />
-            ) : (
-              <ButtonText className="text-white font-semibold">
-                Check Grammar
-              </ButtonText>
-            )}
+            {loading ? <Spinner size="sm" color="white" /> : "Check Grammar"}
           </Button>
-        </VStack>
+        </div>
       ) : (
-        <VStack className="gap-3">
+        <div className="flex flex-col gap-3">
           <UnderlinedText text={text} corrections={corrections} />
           {corrections.length === 0 && !error && (
-            <Text className="text-success-600 text-base font-semibold text-center">
+            <p className="text-success text-base font-semibold text-center">
               No grammar issues found!
-            </Text>
+            </p>
           )}
           <Button
             onPress={handleEdit}
-            className="rounded-lg px-4 py-2 border border-border-400 items-center justify-center"
+            variant="bordered"
+            className="font-semibold"
           >
-            <ButtonText className="text-typography-700 font-semibold">
-              Edit
-            </ButtonText>
+            Edit
           </Button>
-        </VStack>
+        </div>
       )}
 
       {error && (
-        <Text className="text-error-600 text-sm mt-3">{error}</Text>
+        <p className="text-danger text-sm mt-3">{error}</p>
       )}
-    </Box>
+    </div>
   );
 }
