@@ -1,10 +1,5 @@
 import { useState } from "react";
-import { Box } from "@/components/ui/box";
-import { Text } from "@/components/ui/text";
-import { Input, InputField } from "@/components/ui/input";
-import { VStack } from "@/components/ui/vstack";
-import { HStack } from "@/components/ui/hstack";
-import { Pressable } from "@/components/ui/pressable";
+import { Input, Card, CardContent } from "@heroui/react";
 
 export interface LLMSettings {
   apiKey: string;
@@ -48,64 +43,42 @@ export function TokenInput({
   const [expanded, setExpanded] = useState(false);
 
   return (
-    <Box className="mb-4">
-      <Pressable onPress={() => setExpanded(!expanded)}>
-        <HStack className="items-center gap-2">
-          <Text className="text-base font-semibold">Settings</Text>
-          <Text className="text-xs text-typography-500">
-            {expanded ? "▲" : "▼"}
-          </Text>
-        </HStack>
-      </Pressable>
+    <div className="mb-4">
+      <button
+        onClick={() => setExpanded(!expanded)}
+        className="flex items-center gap-2 cursor-pointer bg-transparent border-none p-0"
+      >
+        <span className="text-base font-semibold text-foreground">Settings</span>
+        <span className="text-xs text-default-500">
+          {expanded ? "▲" : "▼"}
+        </span>
+      </button>
 
       {expanded && (
-        <VStack className="mt-3 gap-2.5">
-          <Box>
-            <Text className="text-[13px] mb-1 text-typography-600">
-              API Key
-            </Text>
-            <Input className="rounded-lg border border-border-300 h-10 flex-row overflow-hidden">
-              <InputField
-                value={settings.apiKey}
-                onChangeText={(apiKey) => onChange({ ...settings, apiKey })}
-                placeholder="sk-..."
-                secureTextEntry
-                className="flex-1 px-3 text-typography-900"
-              />
-            </Input>
-          </Box>
-          <Box>
-            <Text className="text-[13px] mb-1 text-typography-600">
-              Base URL
-            </Text>
-            <Input className="rounded-lg border border-border-300 h-10 flex-row overflow-hidden">
-              <InputField
-                value={settings.baseUrl}
-                onChangeText={(baseUrl) => onChange({ ...settings, baseUrl })}
-                placeholder="https://api.openai.com/v1"
-                autoCapitalize="none"
-                autoCorrect={false}
-                className="flex-1 px-3 text-typography-900"
-              />
-            </Input>
-          </Box>
-          <Box>
-            <Text className="text-[13px] mb-1 text-typography-600">
-              Model
-            </Text>
-            <Input className="rounded-lg border border-border-300 h-10 flex-row overflow-hidden">
-              <InputField
-                value={settings.model}
-                onChangeText={(model) => onChange({ ...settings, model })}
-                placeholder="gpt-4o-mini"
-                autoCapitalize="none"
-                autoCorrect={false}
-                className="flex-1 px-3 text-typography-900"
-              />
-            </Input>
-          </Box>
-        </VStack>
+        <Card className="mt-3" shadow="sm">
+          <CardContent className="gap-3">
+            <Input
+              label="API Key"
+              placeholder="sk-..."
+              type="password"
+              value={settings.apiKey}
+              onChange={(e) => onChange({ ...settings, apiKey: e.target.value })}
+            />
+            <Input
+              label="Base URL"
+              placeholder="https://api.openai.com/v1"
+              value={settings.baseUrl}
+              onChange={(e) => onChange({ ...settings, baseUrl: e.target.value })}
+            />
+            <Input
+              label="Model"
+              placeholder="gpt-4o-mini"
+              value={settings.model}
+              onChange={(e) => onChange({ ...settings, model: e.target.value })}
+            />
+          </CardContent>
+        </Card>
       )}
-    </Box>
+    </div>
   );
 }

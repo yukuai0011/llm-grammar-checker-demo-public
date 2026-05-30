@@ -24,7 +24,7 @@ jobs:
 
       - run: bun install
 
-      - run: bunx expo export --platform web
+      - run: bun run build
 
       - uses: actions/upload-pages-artifact@v3
         with:
